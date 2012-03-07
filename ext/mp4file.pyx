@@ -523,8 +523,13 @@ cdef class MP4File:
         
         def __get__(self):
             date = None
-            if self._tags.releaseDate != NULL:
-                date = datetime.strptime(self._tags.releaseDate, "%Y-%m-%dT%H:%M:%SZ")
+            try:
+                if self._tags.releaseDate != NULL:
+                    date = datetime.strptime(self._tags.releaseDate, "%Y-%m-%dT%H:%M:%SZ")
+            except:
+                if self._tags.releaseDate != NULL:
+                    date = datetime.strptime(self._tags.releaseDate, "%Y-%m-%d")
+            #end try
             
             return date
         
